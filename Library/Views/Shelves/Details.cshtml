@@ -1,0 +1,87 @@
+﻿@model DataLayer.Models.Shelf
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Shelf</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Type.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsActived)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsActived)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BookCount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BookCount)
+        </dd>
+        <a asp-controller="Books" asp-action="CreateFromShelf" asp-route-id="@Model.Id">create for this shelf </a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                          BOOK name
+                        </th>
+                        <th>
+                            BOOK price
+                        </th>
+                        <th>
+                       book Quantity
+                        </th>
+                        <th>
+                           book Aurther
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var book in Model.Books)
+                {
+                  
+                        <tr>
+                            <td>
+                            @Html.DisplayFor(modelItem => book.Name)
+                            </td>
+                            <td>
+                            @Html.DisplayFor(modelItem => book.ShelfId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => book.Price)
+                            </td>
+                            <td>
+                            @Html.DisplayFor(modelItem => book.Quantity)
+                            </td>
+                            <td>
+                            <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">Details</a> |
+                            <a asp-controller="Books" asp-action="Delete" asp-route-id="@book.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
