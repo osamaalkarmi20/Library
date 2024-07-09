@@ -1,4 +1,4 @@
-﻿@model DataLayer.Models.Book
+﻿@* @model DataLayer.Models.Book
 
 @{
     ViewData["Title"] = "Create form Shelf";
@@ -50,6 +50,71 @@
 
 <div>
     <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+} *@
+
+                @model DataLayer.Models.Book
+
+@{
+    ViewData["Title"] = "Create from Shelf";
+}
+
+<h1 class="text-center my-4">Create New Book</h1>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Book Details</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="CreateFromShelf" asp-controller="Books" enctype="multipart/form-data" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                        <div class="form-group">
+                            <input asp-for="ShelfId" class="form-control" asp-items="ViewBag.ShelfId" value="@ViewData["ShelfId"]" hidden>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Price" class="control-label"></label>
+                            <input asp-for="Price" class="form-control" />
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Aurther" class="control-label"></label>
+                            <input asp-for="Aurther" class="form-control" />
+                            <span asp-validation-for="Aurther" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Quantity" class="control-label"></label>
+                            <input asp-for="Quantity" class="form-control" />
+                            <span asp-validation-for="Quantity" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PDFFile" class="control-label"></label>
+                            <input type="file" asp-for="PDFFile" class="form-control-file" accept=".pdf" />
+                            <span asp-validation-for="PDFFile" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-3">
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
 </div>
 
 @section Scripts {

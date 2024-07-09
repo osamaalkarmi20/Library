@@ -1,4 +1,4 @@
-﻿@model DataLayer.Models.Book
+﻿@* @model DataLayer.Models.Book
 
 @{
     ViewData["Title"] = "Edit";
@@ -55,4 +55,69 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+ *@
+ @model DataLayer.Models.Book
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1 class="text-center my-4">Edit Book</h1>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-warning text-white">
+                    <h4 class="mb-0">Edit Book Details</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                        <input asp-for="Id" hidden class="form-control" />
+                        <div class="form-group">
+                            <label asp-for="ShelfId" class="control-label"></label>
+                            <select asp-for="ShelfId" class="form-control" asp-items="ViewBag.ShelfId"></select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Price" class="control-label"></label>
+                            <input asp-for="Price" class="form-control" />
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Aurther" class="control-label"></label>
+                            <input asp-for="Aurther" class="form-control" />
+                            <span asp-validation-for="Aurther" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Quantity" class="control-label"></label>
+                            <input asp-for="Quantity" class="form-control" />
+                            <span asp-validation-for="Quantity" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PDFFile" class="control-label"></label>
+                            <input type="file" asp-for="PDFFile" class="form-control-file" accept=".pdf" />
+                            <span asp-validation-for="PDFFile" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                            <a asp-action="Index" class="btn btn-secondary ml-2">Back to List</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

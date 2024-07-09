@@ -173,6 +173,16 @@ namespace Library.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> DownloadPDF(int id)
+        {
+            var book = await _book.GetBook(id);
+            if (book == null || book.PDF == null)
+            {
+                return NotFound();
+            }
 
+            return File(book.PDF, "application/pdf", $"{book.Name}.pdf");
+        }
     }
 }
