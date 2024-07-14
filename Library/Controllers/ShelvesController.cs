@@ -63,7 +63,7 @@ namespace Library.Controllers
             return View(shelf);
         }
 
-        // GET: Shelves/Create
+        // GET: Shelves/Create D
         public async Task<IActionResult> Create()
         {
             var lOOKUPCATEGORY = await _context.LookUpCategories.Where(X => X.Code == "1").Include(C => C.lookUps).FirstOrDefaultAsync();
