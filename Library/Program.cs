@@ -1,4 +1,5 @@
 using DataLayer.Data;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.Interface;
 using ServiceLayer.Services;
@@ -34,6 +35,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
 
+pattern: "{controller=Shelves}/{action=Index}/{id?}");
 app.Run();

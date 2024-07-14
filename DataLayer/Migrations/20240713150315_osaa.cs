@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class osama : Migration
+    public partial class osaa : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -59,6 +59,7 @@ namespace DataLayer.Migrations
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     TypeId = table.Column<int>(type: "int", nullable: false),
                     IsActived = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     BookCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -83,6 +84,7 @@ namespace DataLayer.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Aurther = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     PDF = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
                 },
                 constraints: table =>
@@ -99,17 +101,17 @@ namespace DataLayer.Migrations
             migrationBuilder.InsertData(
                 table: "LookUpCategories",
                 columns: new[] { "Id", "Code", "CreationDate", "Name" },
-                values: new object[] { 1, "1", new DateTime(2024, 7, 8, 9, 26, 0, 211, DateTimeKind.Utc).AddTicks(33), "TypeOfShelf" });
+                values: new object[] { 1, "1", new DateTime(2024, 7, 13, 15, 3, 15, 530, DateTimeKind.Utc).AddTicks(7213), "TypeOfShelf" });
 
             migrationBuilder.InsertData(
                 table: "LookUps",
                 columns: new[] { "Id", "Code", "CreationDate", "LookUpCategoryId", "Name" },
                 values: new object[,]
                 {
-                    { 1, "FAN", new DateTime(2024, 7, 8, 9, 26, 0, 211, DateTimeKind.Utc).AddTicks(162), 1, "Fantasy" },
-                    { 2, "NOV", new DateTime(2024, 7, 8, 9, 26, 0, 211, DateTimeKind.Utc).AddTicks(163), 1, "Novel" },
-                    { 3, "HIS", new DateTime(2024, 7, 8, 9, 26, 0, 211, DateTimeKind.Utc).AddTicks(165), 1, "History" },
-                    { 4, "MED", new DateTime(2024, 7, 8, 9, 26, 0, 211, DateTimeKind.Utc).AddTicks(166), 1, "Medical" }
+                    { 1, "FAN", new DateTime(2024, 7, 13, 15, 3, 15, 530, DateTimeKind.Utc).AddTicks(7365), 1, "Fantasy" },
+                    { 2, "NOV", new DateTime(2024, 7, 13, 15, 3, 15, 530, DateTimeKind.Utc).AddTicks(7367), 1, "Novel" },
+                    { 3, "HIS", new DateTime(2024, 7, 13, 15, 3, 15, 530, DateTimeKind.Utc).AddTicks(7368), 1, "History" },
+                    { 4, "MED", new DateTime(2024, 7, 13, 15, 3, 15, 530, DateTimeKind.Utc).AddTicks(7369), 1, "Medical" }
                 });
 
             migrationBuilder.CreateIndex(

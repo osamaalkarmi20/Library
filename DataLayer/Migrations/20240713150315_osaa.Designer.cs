@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20240708092600_osama")]
-    partial class osama
+    [Migration("20240713150315_osaa")]
+    partial class osaa
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,9 @@ namespace DataLayer.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -95,7 +98,7 @@ namespace DataLayer.Migrations
                         {
                             Id = 1,
                             Code = "FAN",
-                            CreationDate = new DateTime(2024, 7, 8, 9, 26, 0, 211, DateTimeKind.Utc).AddTicks(162),
+                            CreationDate = new DateTime(2024, 7, 13, 15, 3, 15, 530, DateTimeKind.Utc).AddTicks(7365),
                             LookUpCategoryId = 1,
                             Name = "Fantasy"
                         },
@@ -103,7 +106,7 @@ namespace DataLayer.Migrations
                         {
                             Id = 2,
                             Code = "NOV",
-                            CreationDate = new DateTime(2024, 7, 8, 9, 26, 0, 211, DateTimeKind.Utc).AddTicks(163),
+                            CreationDate = new DateTime(2024, 7, 13, 15, 3, 15, 530, DateTimeKind.Utc).AddTicks(7367),
                             LookUpCategoryId = 1,
                             Name = "Novel"
                         },
@@ -111,7 +114,7 @@ namespace DataLayer.Migrations
                         {
                             Id = 3,
                             Code = "HIS",
-                            CreationDate = new DateTime(2024, 7, 8, 9, 26, 0, 211, DateTimeKind.Utc).AddTicks(165),
+                            CreationDate = new DateTime(2024, 7, 13, 15, 3, 15, 530, DateTimeKind.Utc).AddTicks(7368),
                             LookUpCategoryId = 1,
                             Name = "History"
                         },
@@ -119,7 +122,7 @@ namespace DataLayer.Migrations
                         {
                             Id = 4,
                             Code = "MED",
-                            CreationDate = new DateTime(2024, 7, 8, 9, 26, 0, 211, DateTimeKind.Utc).AddTicks(166),
+                            CreationDate = new DateTime(2024, 7, 13, 15, 3, 15, 530, DateTimeKind.Utc).AddTicks(7369),
                             LookUpCategoryId = 1,
                             Name = "Medical"
                         });
@@ -153,7 +156,7 @@ namespace DataLayer.Migrations
                         {
                             Id = 1,
                             Code = "1",
-                            CreationDate = new DateTime(2024, 7, 8, 9, 26, 0, 211, DateTimeKind.Utc).AddTicks(33),
+                            CreationDate = new DateTime(2024, 7, 13, 15, 3, 15, 530, DateTimeKind.Utc).AddTicks(7213),
                             Name = "TypeOfShelf"
                         });
                 });
@@ -170,6 +173,9 @@ namespace DataLayer.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActived")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")

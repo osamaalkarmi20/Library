@@ -1,0 +1,89 @@
+﻿
+ @model IEnumerable<DataLayer.Models.Shelf>
+
+                   
+
+
+
+@{
+	ViewData["Title"] = "Archive";
+}
+<h1 class="logo-right hidden-xs margin-bottom-60">Shelf</h1>
+<div class="tm-right-inner-container">
+    <h1 class="templatemo-header"> </h1>
+
+	<h2 class="templatemo-header" style="color :#17A2B8"> Shelf Archive  </h2>
+
+    <div class="tm-right-inner-container">
+<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+				
+				</div>
+			</div>
+      
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-wrap">
+						<table class="table table-responsive-xl">
+						  <thead>
+						    <tr>
+								<th >
+									@Html.DisplayNameFor(model => model.Name)
+								</th>
+								<th >
+                                            @Html.DisplayNameFor(model => model.Type)
+								</th>
+								<th >
+                                            @Html.DisplayNameFor(model => model.IsActived)
+								</th>
+								<th >
+                                            @Html.DisplayNameFor(model => model.BookCount)
+								</th>
+                                <th>
+                                  Actions
+                                </th>
+
+                            </tr>
+						  </thead>
+						  <tbody>
+							     @foreach (var item in Model)
+                {
+						    <tr class="alert" role="alert">
+						      <td class="d-flex align-items-center">
+						      	
+						      	<div class="pl-3 email">
+											<span>  @Html.DisplayFor(modelItem => item.Name)</span>
+						      	
+						      	</div>
+						      </td>
+
+
+
+                                            <td class="status"><span class="active">@item.Type.Name</span></td>
+											<td class="status"><span class="active">@item.IsActived</span></td>
+                                            <td class="status"><span class="active"> @item.BookCount</span></td>
+					
+                                    <td>
+                                        <div class="pl-3 email">
+													<a asp-action="Retrive" asp-route-id="@item.Id" class="btn btn-info ">Retrive</a>
+
+													<a asp-action="DeletePermently" asp-route-id="@item.Id" class="btn btn-danger "><i class="fa fa-close"></i></a>
+                                    </div>
+                                       
+                                    </td>
+									
+				       
+						    </tr>
+						  }
+				        
+						  </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+    </div>
+ 

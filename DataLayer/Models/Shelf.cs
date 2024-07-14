@@ -14,9 +14,9 @@ namespace DataLayer.Models
 
         public LookUp Type { get; set; }
         [Required]
-
-
         public bool IsActived { get; set; }
+        [Required]
+        public bool IsDeleted { get; set; } 
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Quantity must be a positive number.")]
         public int BookCount { get; set; }

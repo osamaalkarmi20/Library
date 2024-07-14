@@ -21,6 +21,8 @@ namespace DataLayer.Models
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Quantity must be a positive number.")]
         public int Quantity { get; set; }
+        [Required]
+        public bool IsDeleted { get; set; }
         public byte[]? PDF { get; set; }
         [NotMapped]
         

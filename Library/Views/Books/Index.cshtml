@@ -1,116 +1,106 @@
-﻿@* @model IEnumerable<DataLayer.Models.Book>
-
-@{
-    ViewData["Title"] = "Index";
-}
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShelfId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => item.ShelfId)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>|
-                    <a asp-action="DownloadPDF" asp-route-id="@item.Id">Download PDF</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
- *@
+﻿
  @model IEnumerable<DataLayer.Models.Book>
 
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Index";
 }
+<h1 class="logo-right hidden-xs margin-bottom-60">Books</h1>
+<div class="tm-right-inner-container">
+    <h1 class="templatemo-header"> </h1>
 
-<h1 class="text-center my-4">Book List</h1>
+  
 
-<div class="container">
-    <p>
-        <a asp-action="Create" class="btn btn-primary">Create New</a>
-    </p>
-    <div class="table-responsive">
-        <table class="table table-striped table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th scope="col">
-                        @Html.DisplayNameFor(model => model.ShelfId)
-                    </th>
-                    <th scope="col">
-                        @Html.DisplayNameFor(model => model.Price)
-                    </th>
-                    <th scope="col">
-                        @Html.DisplayNameFor(model => model.Quantity)
-                    </th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
+    <div class="tm-right-inner-container">
+<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+				
+				</div>
+			</div>
+        <a asp-action="Create" class="btn btn-info ">
+            Create New
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
+                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
+                <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4" />
+            </svg>
+        </a>
+				<a asp-action="Archive" class="btn btn-warning">
+					Archive
+				
+				</a>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-wrap">
+						<table class="table dataTable table-responsive-xl">
+						  <thead>
+						    <tr>
+								<th >
+									@Html.DisplayNameFor(model => model.Name)
+								</th>
+								<th >
+									Shelf 
+								</th>
+								<th >
+									@Html.DisplayNameFor(model => model.Price)
+								</th>
+								<th >
+									@Html.DisplayNameFor(model => model.Quantity)
+								</th>
+                                <th>
+                                  Actions
+                                </th>
+
+                            </tr>
+						  </thead>
+						  <tbody>
+							     @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ShelfId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Price)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Quantity)
-                        </td>
-                        <td>
-                            <div class="btn-group" role="group">
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary mr-2">Edit</a>
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info mr-2">Details</a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger mr-2">Delete</a>
-                                <a asp-action="DownloadPDF" asp-route-id="@item.Id" class="btn btn-success">Download PDF</a>
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+						    <tr class="alert" role="alert">
+						      <td class="d-flex align-items-center">
+						      	
+						      	<div class="pl-3 email">
+											<span>  @Html.DisplayFor(modelItem => item.Name)</span>
+						      	
+						      	</div>
+						      </td>
+                                  
+                                    
+                                    <td>@Html.DisplayFor(modelItem => item.ShelfId)</td>
+									<td class="status"><span class="active"> @Html.DisplayFor(modelItem => item.Price)</span></td>
+									<td class="status"><span class="active"> @Html.DisplayFor(modelItem => item.Quantity)</span></td>
+					
+                                    <td>
+                                        <div class="pl-3 email">
+
+                                       
+                                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-dark ">
+                                                Details
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-body-text" viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd" d="M0 .5A.5.5 0 0 1 .5 0h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 0 .5m0 2A.5.5 0 0 1 .5 2h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m9 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-9 2A.5.5 0 0 1 .5 4h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m5 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m7 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-12 2A.5.5 0 0 1 .5 6h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m8 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-8 2A.5.5 0 0 1 .5 8h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m7 0a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-7 2a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1h-8a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
+                                                </svg>
+                                            </a>
+                                        <a asp-action="DownloadPDF" asp-route-id="@item.Id" class="btn btn-success ">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-down" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1z" />
+                                                <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
+                                            </svg>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger "><i class="fa fa-close"></i></a>
+                                    </div>
+                                       
+                                    </td>
+									
+				       
+						    </tr>
+						  }
+				        
+						  </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
     </div>
-</div>

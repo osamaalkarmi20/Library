@@ -31,7 +31,7 @@ namespace ServiceLayer.Services
 
         public async Task<List<Shelf>> GetAll()
         {
-            var Shelfs = await _context.Shelfs.Select( tr => new Shelf
+            var Shelfs = await _context.Shelfs.Where(x => x.IsDeleted == false).Select( tr => new Shelf
             {
                 Id = tr.Id,
                 Name = tr.Name,
@@ -39,7 +39,7 @@ namespace ServiceLayer.Services
                 BookCount = tr.BookCount,
                 IsActived = tr.IsActived,
 
-                Books = _context.Books.Where(w => tr.Id == w.ShelfId).Select(e => new Book
+                Books = _context.Books.Where(w => tr.Id == w.ShelfId).Where(x => x.IsDeleted == false).Select(e => new Book
                 {
                     Id = e.Id,
                     Name = e.Name,
@@ -57,9 +57,52 @@ namespace ServiceLayer.Services
             }).ToListAsync();
             return Shelfs;
         }
+		public async Task<List<Shelf>> GetAllArchive()
+		{
+			var Shelfs = await _context.Shelfs.Where(x => x.IsDeleted == true).Select(tr => new Shelf
+			{
+				Id = tr.Id,
+				Name = tr.Name,
+				Type = tr.Type,
+				BookCount = tr.BookCount,
+				IsActived = tr.IsActived,
+
+				Books = _context.Books.Where(w => tr.Id == w.ShelfId).Select(e => new Book
+				{
+					Id = e.Id,
+					Name = e.Name,
+					Aurther = e.Aurther,
+					PDF = e.PDF,
+					Price = e.Price,
+					ShelfId = e.ShelfId,
+					Quantity = e.Quantity,
+					PDFFile = e.PDFFile,
 
 
-        public async Task<Shelf> GetShelf(int Id)
+
+				}
+							).ToList()
+			}).ToListAsync();
+			return Shelfs;
+		}
+
+		public async Task<Shelf> Retrive(int Id)
+		{
+			var shelf = await GetShelf(Id);
+			shelf.IsDeleted = false;
+			_context.Entry(shelf).State = EntityState.Modified;
+			await _context.SaveChangesAsync();
+			return shelf;
+		}
+		public async Task<Shelf> DeletePermenetly(int Id)
+		{
+			var shelf = await GetShelf(Id);
+			
+			_context.Entry(shelf).State = EntityState.Deleted;
+			await _context.SaveChangesAsync();
+			return shelf;
+		}
+		public async Task<Shelf> GetShelf(int Id)
         {
             var singleShelf = await _context.Shelfs.Where(a => a.Id == Id).Select(tr => new Shelf
             {
@@ -70,7 +113,7 @@ namespace ServiceLayer.Services
                 BookCount = tr.BookCount,
                 IsActived = tr.IsActived,
 
-                Books = _context.Books.Where(w => tr.Id == w.ShelfId).Select(e => new Book
+                Books = _context.Books.Where(w => tr.Id == w.ShelfId && w.IsDeleted == false).Select(e => new Book
                 {
                     Id = e.Id,
                     Name = e.Name,
@@ -100,7 +143,8 @@ namespace ServiceLayer.Services
         public async Task<Shelf> Delete(int Id)
         {
             var shelf = await GetShelf(Id);
-            _context.Entry(shelf).State = EntityState.Deleted;
+            shelf.IsDeleted = true;
+            _context.Entry(shelf).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 return shelf;
         }

@@ -32,11 +32,19 @@ namespace ServiceLayer.Services
 
         public async Task<List<Book>> GetAll()
         {
-            var Books =await _context.Books.Include(b => b.Shelf).ToListAsync();
-            return Books;
+            var Books =await _context.Books.Where(x=>x.IsDeleted == false).Include(b => b.Shelf).ToListAsync();
+            var book =  Books.Where(x => x.Shelf.IsDeleted == false).ToList();
+            return book;
         }
+		public async Task<List<Book>> GetAllArchive()
+		{
+			var Books = await _context.Books.Where(x => x.IsDeleted == true).Include(b => b.Shelf).ToListAsync();
+			var Bookfalse = await _context.Books.Where(x => x.IsDeleted == false).Include(b => b.Shelf).ToListAsync();
+			Books.AddRange(Bookfalse.Where(x => x.Shelf.IsDeleted == true).ToList());
+			return Books;
+		}
 
-        public  byte[] ConvertIFormFileToByteArray(IFormFile formFile)
+		public  byte[] ConvertIFormFileToByteArray(IFormFile formFile)
         {
             using (var stream = new MemoryStream())
             {
@@ -60,7 +68,18 @@ namespace ServiceLayer.Services
                 // Handle the case when the book is not found
                 throw new Exception("Book not found");
             }
+            if (existingBook.ShelfId != EditedBook.ShelfId)
+            {
+                var shelf = await _context.Shelfs.FirstOrDefaultAsync(s => s.Id == EditedBook.ShelfId);
+                shelf.BookCount = shelf.BookCount + 1;
+                _context.Entry(shelf).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                var shelf2 = await _context.Shelfs.FirstOrDefaultAsync(s => s.Id == existingBook.ShelfId);
+                shelf2.BookCount = shelf2.BookCount - 1;
+                _context.Entry(shelf2).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
 
+            }
             // Update the properties of the existing book with the edited values
             existingBook.Aurther = EditedBook.Aurther;
             existingBook.Price = EditedBook.Price;
@@ -74,7 +93,7 @@ namespace ServiceLayer.Services
             {
                 existingBook.PDF = ConvertIFormFileToByteArray(pdfFile);
             }
-
+        
             // Mark the entity as modified
             _context.Entry(existingBook).State = EntityState.Modified;
 
@@ -90,11 +109,32 @@ namespace ServiceLayer.Services
             shelf.BookCount = shelf.BookCount - 1;
             _context.Entry(shelf).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            _context.Entry(book).State = EntityState.Deleted;
+            book.IsDeleted = true;
+            _context.Entry(book).State = EntityState.Modified;
            await _context.SaveChangesAsync();
             return book;
         }
+		public async Task<Book> DeletePermenetly(int Id)
+		{
+			var book = await GetBook(Id);
+			
+			_context.Entry(book).State = EntityState.Deleted;
+			await _context.SaveChangesAsync();
+			return book;
+		}
+		public async Task<Book> Retrive(int Id)
+		{
+			var book = await GetBook(Id);
+			var shelf = await _context.Shelfs.FirstOrDefaultAsync(s => s.Id == book.ShelfId);
+			shelf.BookCount = shelf.BookCount + 1;
+			_context.Entry(shelf).State = EntityState.Modified;
+			await _context.SaveChangesAsync();
+			book.IsDeleted = false;
+			_context.Entry(book).State = EntityState.Modified;
+			await _context.SaveChangesAsync();
+			return book;
+		}
 
-       
-    }
+
+	}
 }

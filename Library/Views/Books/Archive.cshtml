@@ -1,0 +1,92 @@
+﻿
+ @model IEnumerable<DataLayer.Models.Book>
+
+@{
+	ViewData["Title"] = "Index";
+}
+<h1 class="logo-right hidden-xs margin-bottom-60">Books</h1>
+<div class="tm-right-inner-container">
+    <h1 class="templatemo-header"> </h1>
+
+
+	<h2 class="templatemo-header" style="color :#17A2B8"> Books Archive </h2>
+
+    <div class="tm-right-inner-container">
+<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+				
+				</div>
+			</div>
+     
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-wrap">
+						<table class="table dataTable table-responsive-xl">
+						  <thead>
+						    <tr>
+								<th >
+									@Html.DisplayNameFor(model => model.Name)
+								</th>
+								<th >
+									Shelf 
+								</th>
+								<th >
+									@Html.DisplayNameFor(model => model.Price)
+								</th>
+								<th >
+									@Html.DisplayNameFor(model => model.Quantity)
+								</th>
+                                <th>
+                                  Actions
+                                </th>
+
+                            </tr>
+						  </thead>
+						  <tbody>
+							     @foreach (var item in Model)
+                {
+						    <tr class="alert" role="alert">
+						      <td class="d-flex align-items-center">
+						      	
+						      	<div class="pl-3 email">
+											<span>  @Html.DisplayFor(modelItem => item.Name)</span>
+						      	
+						      	</div>
+						      </td>
+                                  
+                                    
+                                    <td>@Html.DisplayFor(modelItem => item.ShelfId)</td>
+									<td class="status"><span class="active"> @Html.DisplayFor(modelItem => item.Price)</span></td>
+									<td class="status"><span class="active"> @Html.DisplayFor(modelItem => item.Quantity)</span></td>
+					
+                                    <td>
+                                        <div class="pl-3 email">
+
+													@if (item.Shelf.IsDeleted == false)
+													{
+														<a asp-action="Retrive" asp-route-id="@item.Id" class="btn btn-info ">Retrive</a>
+
+														<a asp-action="DeletePermently" asp-route-id="@item.Id" class="btn btn-danger "><i class="fa fa-close"></i></a>
+													}
+													@if (item.Shelf.IsDeleted == true)
+													{
+														<p>retrive the Shelf first</p>
+													}
+												</div>
+                                       
+                                    </td>
+									
+				       
+						    </tr>
+						  }
+				        
+						  </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+    </div>

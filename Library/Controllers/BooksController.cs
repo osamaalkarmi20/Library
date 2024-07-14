@@ -28,9 +28,26 @@ namespace Library.Controllers
             var Books = await _book.GetAll();
             return View(Books);
         }
+		public async Task<IActionResult> Archive()
+		{
 
-        // GET: Books/Details/5
-        public async Task<IActionResult> Details(int id)
+			var Books = await _book.GetAllArchive();
+			return View(Books);
+		}
+		public async Task<IActionResult> Retrive(int Id)
+		{
+			var Shelves = await _book.Retrive(Id);
+			return RedirectToAction("Archive", "Books");
+
+		}
+		public async Task<IActionResult> DeletePermently(int Id)
+		{
+			var Shelves = await _book.DeletePermenetly(Id);
+			return RedirectToAction("Archive", "Books");
+
+		}
+		// GET: Books/Details/5
+		public async Task<IActionResult> Details(int id)
         {
             var book = await _book.GetBook(id);
           
@@ -60,9 +77,14 @@ namespace Library.Controllers
 
         {
             var receivedShelfId = book.ShelfId;
+            
             if (book.PDFFile.ContentType != "application/pdf" && book.PDFFile.ContentType == null)
             {
                 ModelState.AddModelError("PDFFile", "Only PDF files are allowed.");
+                var Shelfs = await _Shelf.GetAll();
+                ViewData["ShelfId"] = new SelectList(Shelfs, "Id", "Name");
+                return View();
+
             }
             book.PDF = _book.ConvertIFormFileToByteArray(pdfFile);
             if (ModelState.IsValid)
@@ -82,9 +104,12 @@ namespace Library.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(IFormFile pdfFile, [FromForm] Book book)
         {
-            if (book.PDFFile.ContentType != "application/pdf"  )
+            if (book.PDFFile == null || book.PDFFile.ContentType != "application/pdf"  )
             {
                 ModelState.AddModelError("PDFFile", "Only PDF files are allowed.");
+                var Shelfs = await _Shelf.GetAll();
+                ViewData["ShelfId"] = new SelectList(Shelfs, "Id", "Name");
+                return View();
             }
             book.PDF = _book.ConvertIFormFileToByteArray(pdfFile);
             if (ModelState.IsValid)
@@ -121,11 +146,18 @@ namespace Library.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit( [FromForm] Book book, IFormFile? pdfFile)
         {
+            var Shelfs = await _Shelf.GetAll();
+            ViewData["ShelfId"] = new SelectList(Shelfs, "Id", "Name", book.ShelfId);
             if (pdfFile != null)
             {
-                if (book.PDFFile.ContentType != "application/pdf" || book.PDF == null)
+                if (book.PDFFile.ContentType != "application/pdf" || book.PDFFile == null)
                 {
                     ModelState.AddModelError("PDFFile", "Only PDF files are allowed.");
+
+                    var books = await _book.GetBook(book.Id);
+                  
+                    return View(books);
+
                 }
             }
             if (ModelState.IsValid)
@@ -138,8 +170,7 @@ namespace Library.Controllers
                 return RedirectToAction(nameof(Index));
 
             }
-            var Shelfs = await _Shelf.GetAll();
-            ViewData["ShelfId"] = new SelectList(Shelfs, "Id", "Name", book.ShelfId);
+            
             return View(book);
         }
 

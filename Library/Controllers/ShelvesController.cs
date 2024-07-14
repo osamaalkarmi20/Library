@@ -32,8 +32,26 @@ namespace Library.Controllers
 
         }
 
-        // GET: Shelves/Details/5
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Archive()
+        {
+            var Shelves = await _shelf.GetAllArchive();
+            return View(Shelves);
+
+        }
+		public async Task<IActionResult> Retrive(int Id)
+		{
+			var Shelves = await _shelf.Retrive(Id);
+			return RedirectToAction("Archive","Shelves" );
+
+		}
+		public async Task<IActionResult> DeletePermently(int Id)
+		{
+			var Shelves = await _shelf.DeletePermenetly(Id);
+			return RedirectToAction("Archive", "Shelves");
+
+		}
+		// GET: Shelves/Details/5
+		public async Task<IActionResult> Details(int id)
         {
 
             var shelf = await _shelf.GetShelf(id);

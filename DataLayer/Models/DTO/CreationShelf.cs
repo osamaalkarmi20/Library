@@ -22,6 +22,8 @@ namespace DataLayer.Models.DTO
 
 
         public bool IsActived { get; set; }
+        [Required]
+        public bool IsDeleted { get; set; } 
 
         public List<Book>? Books { get; set; }
 
