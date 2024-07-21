@@ -1,0 +1,78 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IHtmlLocalizer<Shared> local
+ @model IEnumerable<DataLayer.Models.Shelf>
+
+
+
+
+
+@{
+	ViewData["Title"] = "Archive";
+}
+<h1 class="logo-right hidden-xs margin-bottom-60">Dashboard</h1>
+<div class="tm-right-inner-container">
+	<h1 class="templatemo-header"> </h1>
+
+	<h2 class="templatemo-header" style="color :#17A2B8">Charts </h2>
+
+	<div class="tm-right-inner-container">
+		<section class="ftco-section">
+			<div class="container">
+                <div class="row">
+                    <div class="col-8">
+                    <canvas id="myChart"></canvas>
+                </div>
+
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+                <script>
+                    const ct = document.getElementById('myChart');
+                    const labels = @Html.Raw(Json.Serialize(ViewBag.BookLabels));
+                    const quantitys = @Html.Raw(Json.Serialize(ViewBag.BookQuantitys));
+                    new Chart(ct, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Books Quantitys',
+                                data: quantitys,
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                </script>
+
+                <!-- Second Chart (Doughnut Chart) -->
+                <div class="col-4">
+                    <canvas id="myCharts2"></canvas>
+                </div>
+
+                <script>
+                    const ctx = document.getElementById('myCharts2');
+                        const Shelflabels = @Html.Raw(Json.Serialize(ViewBag.Shelflabels));
+                        const ShelfBooksCount = @Html.Raw(Json.Serialize(ViewBag.ShelfBooksCount));
+                    const colors = @Html.Raw(Json.Serialize(ViewBag.Colors));
+                    new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                                labels: Shelflabels,
+                            datasets: [{
+                                label: 'My First Dataset',
+                                    data: ShelfBooksCount,
+                                backgroundColor: colors,
+                                hoverOffset: 4
+                            }]
+                        }
+                    });
+                </script>
+
+                </div >
+        </section>
+    </div>
+</div>

@@ -10,6 +10,7 @@ using DataLayer.Models;
 using ServiceLayer.Interface;
 using NuGet.Protocol;
 using DataLayer.Models.DTO;
+using System.Drawing;
 
 namespace Library.Controllers
 {
@@ -17,11 +18,14 @@ namespace Library.Controllers
     {
         private readonly LibraryDbContext _context;
         private readonly IShelf _shelf;
+		private readonly IBook _book; 
 
-        public ShelvesController(LibraryDbContext context, IShelf shelf)
+        public ShelvesController(LibraryDbContext context, IShelf shelf, IBook book, IEmail email)
         {
             _context = context;
+            _book = book;
             _shelf = shelf;
+            _email = email;
         }
 
         // GET: Shelves
@@ -32,7 +36,54 @@ namespace Library.Controllers
 
         }
 
-        public async Task<IActionResult> Archive()
+        public async Task<IActionResult> Dashboard()
+        {
+            //await _email.sendEmail();
+           
+            var Shelves = await _shelf.GetAll();
+            var Books = await _book.GetAll();
+			List<string> Colors = new List<string>();
+			foreach (var item in Books) { 
+            Random r = new Random();
+            var a = Color.FromArgb(r.Next(256), r.Next(256), r.Next(256));
+
+                string z = $"rgb({a.R}, {a.G}, {a.B})";
+				Colors.Add(z);
+
+
+		}
+
+			List<int> BookQuantitys = new List<int>();
+			List<string> BookLabels = new List<string>();
+			List<string> ShelfLabels = new List<string>();
+			List<int> ShelfBooksCount = new List<int>();
+			foreach (var item in Books)
+			{
+				BookLabels.Add(item.Name);
+				BookQuantitys.Add(item.Quantity);
+
+			}
+            foreach (var item in Shelves)
+            {
+                ShelfLabels.Add(item.Name);
+                ShelfBooksCount.Add(item.BookCount);
+            }
+
+			var BL = BookLabels.ToArray();
+			var BQ = BookQuantitys.ToArray();
+            var SL = ShelfLabels.ToArray();
+            var SBC = ShelfBooksCount.ToArray();
+           var CLR= Colors.ToArray();
+			ViewData["BookLabels"] = BL;
+			ViewData["BookQuantitys"] = BQ;
+			ViewData["Colors"] = CLR;
+			ViewData["ShelfLabels"] = SL;
+			ViewData["ShelfBooksCount"] = SBC;
+			return View(Shelves);
+
+		}
+
+		public async Task<IActionResult> Archive()
         {
             var Shelves = await _shelf.GetAllArchive();
             return View(Shelves);

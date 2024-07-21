@@ -1,9 +1,10 @@
-﻿ @model DataLayer.Models.Shelf
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IHtmlLocalizer<Shared> local
+ @model DataLayer.Models.Shelf
 
 @{
     ViewData["Title"] = "Details";
 }
-<h1 class="logo-right hidden-xs margin-bottom-60">Shelf</h1>
+<h1 class="logo-right hidden-xs margin-bottom-60"> @local["Shelf"]</h1>
 <div class="tm-right-inner-container">
     <h1 class="templatemo-header"> </h1>
 
@@ -11,7 +12,7 @@
 
     <div class="tm-right-inner-container">
 
-        <h2 class="templatemo-header" style="color :#17A2B8"> Shelf Details  </h2>
+        <h2 class="templatemo-header" style="color :#17A2B8"> @local["Shelf Details"]  </h2>
 <section class="ftco-section">
 		<div class="container">
 	
@@ -19,96 +20,73 @@
 			<div class="row">
                     <dl class="row">
                         <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.Name)
+                            @local["Shelf"]
                         </dt>
                         <dd class="col-sm-8">
                             @Html.DisplayFor(model => model.Name)
                         </dd>
                         <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.Type)
+                            @local["Type"]
                         </dt>
                         <dd class="col-sm-8">
                             @Html.DisplayFor(model => model.Type.Name)
                         </dd>
                         <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.IsActived)
+                            @local["IsActived"]
                         </dt>
                         <dd class="col-sm-8">
                             @Html.DisplayFor(model => model.IsActived)
                         </dd>
                         <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.BookCount)
+                            @local["BookCount"]
                         </dt>
                         <dd class="col-sm-8">
                             @Html.DisplayFor(model => model.BookCount)
                         </dd>
                     </dl>
 				<div class="col-md-10">
-                        <a asp-action="CreateFromShelf" asp-controller="Books" asp-route-id="@Model.Id" class="btn btn-info ">Create in Shelf</a>
-					<div class="table-wrap">
-						<table class="table table-responsive-xl">
-						  <thead>
-						    <tr>
-								<th >
-                                        Book Name
-								</th>
-								<th >
-                                            Book Author
-								</th>
-								<th >
-                                            Book Quantity
-								</th>
-								<th >
-                                            Book Price
-								</th>
-                                <th>
-                                  Actions
-                                </th>
+                        <div class="container">
+                            <div class="mb-4">
+                                <a asp-action="CreateFromShelf" asp-controller="Books" asp-route-id="@Model.Id" class="btn btn-info rounded-pill">
+                                    @local["Create in Shelf"]
+                                </a>
+                            </div>
 
-                            </tr>
-						  </thead>
-						  <tbody>
-                                    @foreach (var item in Model.Books)
-                {
-						    <tr class="alert" role="alert">
-						      <td class="d-flex align-items-center">
-						      	
-						      	<div class="pl-3 email">
-											<span>  @Html.DisplayFor(modelItem => item.Name)</span>
-						      	
-						      	</div>
-						      </td>
-
-
-
-                                            <td class="status"><span class="active">@item.Aurther</span></td>
-											<td class="status"><span class="active">@item.Quantity</span></td>
-                                            <td class="status"><span class="active"> @item.Price</span></td>
-					
-                                    <td>
-                                        <div class="pl-3 email">
-
-                                                    
-                                                    <a asp-action="Details" asp-controller="Books" asp-route-id="@item.Id" class="btn btn-dark ">
-                                                Details
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-body-text" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd" d="M0 .5A.5.5 0 0 1 .5 0h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 0 .5m0 2A.5.5 0 0 1 .5 2h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m9 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-9 2A.5.5 0 0 1 .5 4h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m5 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m7 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-12 2A.5.5 0 0 1 .5 6h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m8 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-8 2A.5.5 0 0 1 .5 8h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m7 0a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-7 2a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1h-8a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
-                                                </svg>
-                                            </a>
-
-                                                    <a asp-action="Delete" asp-controller="Books" asp-route-id="@item.Id" class="btn btn-danger "><i class="fa fa-close"></i></a>
+                            <div class="row">
+                                @foreach (var item in Model.Books)
+                                {
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card rounded-4 shadow overflow-hidden">
+                                            <img src="" class="card-img-top" alt="@item.Name">
+                                            <div class="card-body">
+                                                <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
+                                                <h6 class="card-subtitle mb-2 text-muted">@item.Aurther</h6>
+                                                <p class="card-text">
+                                                    <strong>@local["Quantity"]:</strong> @item.Quantity<br>
+                                                    <strong>@local["Price"]:</strong> @item.Price
+                                                </p>
+                                                <div class="d-flex justify-content-between">
+                                                    <a asp-action="Details" asp-controller="Books" asp-route-id="@item.Id" class="btn btn-dark rounded-pill">
+                                                        @local["Details"]
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-body-text" viewBox="0 0 16 16">
+                                                            <path fill-rule="evenodd" d="M0 .5A.5.5 0 0 1 .5 0h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 0 .5m0 2A.5.5 0 0 1 .5 2h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m9 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-9 2A.5.5 0 0 1 .5 4h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m5 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m7 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-12 2A.5.5 0 0 1 .5 6h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m8 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-8 2A.5.5 0 0 1 .5 8h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m7 0a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-7 2a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1h-8a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
+                                                        </svg>
+                                                    </a>
+                                                    <a asp-action="Delete" asp-controller="Books" asp-route-id="@item.Id" class="btn btn-danger rounded-pill">
+                                                        <i class="fa fa-close"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                       
-                                    </td>
-									
-				       
-						    </tr>
-						  }
-				        
-						  </tbody>
-						</table>
-					</div>
-				</div>
+                                }
+                            </div>
+                        </div>
+                            </div>
+                        </div>
+                            </div>
+                        </div>
+                    </div>
 			</div>
 		</div>
 	</section>
