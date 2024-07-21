@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using DataLayer.Models;
 using ServiceLayer.Interface;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.Identity.Client;
+using System.Linq;
 
 
 namespace Library.Controllers
@@ -26,7 +28,22 @@ namespace Library.Controllers
         {
 
             var Books = await _book.GetAll();
-            return View(Books);
+
+	List<int> Quantitys = new List<int>();
+
+			List<string> LABALES = new List<string>();
+			foreach (var item in Books)
+            {
+				LABALES.Add(item.Name);
+				Quantitys.Add(item.Quantity);
+
+            }
+
+		var L=	LABALES.ToArray();
+		var Q= 	Quantitys.ToArray();
+            ViewData["Labels"]= L;
+			ViewData["Quantitys"] = Q;
+			return View(Books);
         }
 		public async Task<IActionResult> Archive()
 		{

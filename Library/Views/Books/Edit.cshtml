@@ -1,6 +1,6 @@
-﻿
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IHtmlLocalizer<Shared> local
 
-                                                @model DataLayer.Models.Book
+@model DataLayer.Models.Book
 
 @{
     Layout = "_Layout";
@@ -8,7 +8,7 @@
 }
 
 
-<h1 class="logo-right hidden-xs margin-bottom-60 ">Books</h1>
+<h1 class="logo-right hidden-xs margin-bottom-60 ">@local["Books"]</h1>
 <div class="tm-right-inner-container">
     <h1 class="templatemo-header"> </h1>
 
@@ -16,7 +16,7 @@
 
     <div class="tm-right-inner-container">
 
-        <h2 class="templatemo-header" style="color :#E0A800"> Book Edit  </h2>
+        <h2 class="templatemo-header" style="color :#E0A800">@local["Book Edit"]  </h2>
         <div class="card-body">
             <form asp-action="Edit" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
@@ -26,7 +26,7 @@
                                                 <input asp-for="IsDeleted" hidden class="form-control" value="false" />
 
                         <div class="form-group">
-                            <label asp-for="ShelfId" class="control-label"></label>
+                            <label asp-for="ShelfId" class="control-label"> @local["Shelf Name"]</label>
 
                             <select asp-for="ShelfId" class="form-control">
                                 @foreach (var shelf in (SelectList)ViewBag.ShelfId)
@@ -39,42 +39,42 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-6">
-                        <label asp-for="Name" class="control-label font-weight-bold"></label>
+                        <label asp-for="Name" class="control-label font-weight-bold"> @local["Name"]</label>
                         <input asp-for="Name" class="form-control" />
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-6">
-                        <label asp-for="Price" class="control-label font-weight-bold"></label>
+                        <label asp-for="Price" class="control-label font-weight-bold"> @local["Price"]</label>
                         <input asp-for="Price" class="form-control" />
                         <span asp-validation-for="Price" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-6">
-                        <label asp-for="Aurther" class="control-label font-weight-bold"></label>
+                        <label asp-for="Aurther" class="control-label font-weight-bold"> @local["Aurther"]</label>
                         <input asp-for="Aurther" class="form-control" />
                         <span asp-validation-for="Aurther" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-6">
-                        <label asp-for="Quantity" class="control-label font-weight-bold"></label>
+                        <label asp-for="Quantity" class="control-label font-weight-bold">@local["Quantity"]</label>
                         <input asp-for="Quantity" class="form-control" />
                         <span asp-validation-for="Quantity" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-6">
-                        <label asp-for="PDFFile" class="control-label font-weight-bold"> PDF File ONLY</label>
+                        <label asp-for="PDFFile" class="control-label font-weight-bold">@local[" PDF File ONLY"]</label>
                         <input type="file" asp-for="PDFFile" class="form-control-file" accept=".pdf" />
                         <span asp-validation-for="PDFFile" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group text-center">
                     <div class="col-md-6">
-                        <input type="submit" value="Edit" class="btn btn-warning font-weight-bold" />
+                        <input type="submit" value="Edit" class="btn btn-warning font-weight-bold rounded-pill" />
                     </div>
                 </div>
             </form>

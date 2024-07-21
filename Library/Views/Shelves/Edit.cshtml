@@ -1,9 +1,10 @@
-﻿   @model DataLayer.Models.Shelf
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IHtmlLocalizer<Shared> local
+   @model DataLayer.Models.Shelf
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Edit";
 }
-<h1 class="logo-right hidden-xs margin-bottom-60 ">Shelf</h1>
+<h1 class="logo-right hidden-xs margin-bottom-60 ">@local["Shelf"] </h1>
 <div class="tm-right-inner-container">
     <h1 class="templatemo-header"> </h1>
 
@@ -11,16 +12,16 @@
 
     <div class="tm-right-inner-container">
 
-        <h2 class="templatemo-header" style="color :#E0A800"> Shelf Edit  </h2>
+        <h2 class="templatemo-header" style="color :#E0A800">@local["Shelf Edit"]   </h2>
         <div class="card-body">
             <form asp-action="Edit" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
-                <input type="hidden" asp-for="Id" />
-                <input asp-for="IsDeleted" hidden class="form-control" value="false" />
+                <input type="hidden" asp-for="Id" class="" />
+                <input asp-for="IsDeleted" hidden class="form-control rounded-pill" value="false" />
 
                 <div class="form-group">
                     <div class="col-md-6">
-                        <label asp-for="Name" class="control-label font-weight-bold"></label>
+                        <label asp-for="Name" class="control-label font-weight-bold">@local["Name"]</label>
                         <input asp-for="Name" class="form-control" />
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
@@ -28,7 +29,7 @@
                 <div class="form-group">
                     <div class="col-md-6">
 
-                        <label asp-for="Type" class="control-label font-weight-bold"></label>
+                        <label asp-for="Type" class="control-label font-weight-bold">@local["Type"]</label>
                         <select asp-for="Type" class="form-control" asp-items="ViewBag.Type"></select>
                         <span asp-validation-for="Type" class="text-danger"></span>
 
@@ -36,14 +37,14 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-6">
-                        <label class="form-check-label font-weight-bold" asp-for="IsActived ">Is Actived</label>
+                        <label class="form-check-label font-weight-bold" asp-for="IsActived ">@local["IsActived"]</label>
                         <input asp-for="IsActived" />
                     </div>
                 </div>
 
                 <div class="form-group text-center">
                     <div class="col-md-6">
-                        <input type="submit" value="Edit" class="btn btn-warning font-weight-bold" />
+                        <input type="submit" value="Edit" class="btn btn-warning font-weight-bold rounded-pill" />
                     </div>
                 </div>
             </form>
