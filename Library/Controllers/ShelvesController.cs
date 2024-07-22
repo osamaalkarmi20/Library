@@ -20,12 +20,12 @@ namespace Library.Controllers
         private readonly IShelf _shelf;
 		private readonly IBook _book; 
 
-        public ShelvesController(LibraryDbContext context, IShelf shelf, IBook book, IEmail email)
+        public ShelvesController(LibraryDbContext context, IShelf shelf, IBook book)
         {
             _context = context;
             _book = book;
             _shelf = shelf;
-            _email = email;
+        
         }
 
         // GET: Shelves

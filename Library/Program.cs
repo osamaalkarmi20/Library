@@ -1,5 +1,6 @@
 using DataLayer.Data;
 using Hangfire;
+using Library;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Data.SqlClient;
@@ -11,7 +12,6 @@ using System.ComponentModel.Design;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IBook, BookService>();
@@ -32,12 +32,18 @@ builder.Services.Configure<RequestLocalizationOptions>(option =>
     option.SupportedCultures = Cultures;
     option.SupportedUICultures = Cultures;
 });
+
 builder.Services.AddDbContext<LibraryDbContext>(opts => {
     opts.UseSqlServer(
     builder.Configuration["ConnectionStrings:LibraryConnection"]);
 });
+
 builder.Services.AddHangfire(x => x.UseSqlServerStorage(builder.Configuration["ConnectionStrings:LibraryConnection"]));
 builder.Services.AddHangfireServer();
+
+// Add Job service
+builder.Services.AddScoped<Job>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -57,6 +63,17 @@ app.UseAuthorization();
 app.UseHangfireDashboard(pathMatch:"/dash");
 app.UseRequestLocalization(app.Services.
 GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var recurringJobManager = scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
+    recurringJobManager.AddOrUpdate<Job>(
+        "my-recurring-job-id",
+        job => job.Booklog(),
+        "*/20 * * * * *"
+    );
+}
 app.MapControllerRoute(
     name: "default",
 
